@@ -51,7 +51,7 @@ Remaining numerical missing values were imputed using the median.
 * **Descriptive Statistics:** Generated summary statistics for all features.
 * **Attribute Distribution:** Visualized the distribution of both the target variable and descriptive attributes using count plots and histograms.
 * **Correlation Analysis:** A correlation matrix was generated to understand relationships between features. Notably, an examination of the correlation matrix reveals a relationship between the engineered relationship between the engineered `poisson_anomaly` feature and `velocity_score`, from which it is partially derived. While some correlation exists, for tree-based models like Random Forests, this collinearity typically does not negatively impact predictive performance. Instead, it can influence the interpretation of individual feature importance, as the predictive 'credit' might be distributed between correlated features. However, `poisson_anomaly` provides a distinct measure of statistical unusualness that complements the raw `velocity_score`.
-<img width="200" alt="image" src="https://github.com/LDTgit/Fraud_Detection/blob/main/correlation_matrix.png" />
+<img width="500" alt="image" src="https://github.com/LDTgit/Fraud_Detection/blob/main/correlation_matrix.png" />
 
 ### Feature Engineering
 A new feature, `poisson_anomaly` was engineered to capture anomalous transaction frequencies. This feature leverages the Poisson distribution to asses the probability of a given number of recent transactions (`velocity_score`) occurring based on the historical average transaction rate (`prev_transactions`) for specific age groups (`customer_age`). A lower `poison_anomaly` score indicates a higher statistical anomaly, potentially pointing to fraudulent behavior. This aims to enhance the model's ability to detect unusual patterns that might not be obvious from raw features.
@@ -67,11 +67,11 @@ To improve the model's performance, especially in detecting the minority class (
 ## Results and Evaluation
 The model's performance was evaluated using:
 * **Confusion Matrix:** To understand True Positives, True Negatives, False Positives and False Negatives.
-<img width="200" alt="image" src="https://github.com/LDTgit/Fraud_Detection/blob/main/correlation_matrix.png" />
+<img width="500" alt="image" src="https://github.com/LDTgit/Fraud_Detection/blob/main/optimized_confusion_matrix.png" />
 * **Classification Report:** Providing Precision, Recall and F1-Score for each class.
 * **Accuracy:** Overall correctness of predictions.
 * **ROC Curve and AUC:** Visualizing the trade-off between True and Positive Rate and False Positive Rate.
-<img width="200" alt="image" src="https://github.com/LDTgit/Fraud_Detection/blob/main/ROC.png" />
+<img width="500" alt="image" src="https://github.com/LDTgit/Fraud_Detection/blob/main/ROC.png" />
 
 **Initial Model Performance (before optimization):**
 * Recall (fraud class): ~28%
@@ -87,4 +87,5 @@ While the overall accuracy sightly decreased, the **Recall for the fraud class s
 * **Data Imbalance is Critical:** The dataset's severe imbalance (only ~10% fraud) necessitated specialized techniques like `class_weight='balanced'` and `f1-score` based evaluation and optimization.
 * **Effective Feature Engineering:** The `poission_anomaly` feature, which quantifies the unusual frequency of transactions, proved to be a strong predictor, ranking highly in feature importance.
 * **Importance of Optimization:** Both hyperparameter tuning and prediction threshold adjustment were essential for improving the detection of fraudulent transactions. The threshold adjustment specifically allowed for a better balance between catching fraud and minimizing false alarms.
-* **Top Predictors:** `distance_from_home`, `velocity_score`, `network_quality`, `transaction_amount` and the engineered `poisson_anomaly` were identified as the most important features in detecting fraud. 
+* **Top Predictors:** `distance_from_home`, `velocity_score`, `network_quality`, `transaction_amount` and the engineered `poisson_anomaly` were identified as the most important features in detecting fraud.
+<img width="500" alt="image" src="https://github.com/LDTgit/Fraud_Detection/blob/main/optimized_feature_importance.png" />
