@@ -50,7 +50,8 @@ Remaining numerical missing values were imputed using the median.
 * **Dataset Structure:** Verified the number of rows and columns and data types.
 * **Descriptive Statistics:** Generated summary statistics for all features.
 * **Attribute Distribution:** Visualized the distribution of both the target variable and descriptive attributes using count plots and histograms.
-* **Correlation Analysis:** A correlation matrix was generated to understand relationships between features.
+* **Correlation Analysis:** A correlation matrix was generated to understand relationships between features. Notably, an examination of the correlation matrix reveals a relationship between the engineered relationship between the engineered `poisson_anomaly` feature and `velocity_score`, from which it is partially derived. While some correlation exists, for tree-based models like Random Forests, this collinearity typically does not negatively impact predictive performance. Instead, it can influence the interpretation of individual feature importance, as the predictive 'credit' might be distributed between correlated features. However, `poisson_anomaly` provides a distinct measure of statistical unusualness that complements the raw `velocity_score`.
+<img width="200" alt="image" src="https://github.com/LDTgit/Fraud_Detection/blob/main/correlation_matrix.png" />
 
 ### Feature Engineering
 A new feature, `poisson_anomaly` was engineered to capture anomalous transaction frequencies. This feature leverages the Poisson distribution to asses the probability of a given number of recent transactions (`velocity_score`) occurring based on the historical average transaction rate (`prev_transactions`) for specific age groups (`customer_age`). A lower `poison_anomaly` score indicates a higher statistical anomaly, potentially pointing to fraudulent behavior. This aims to enhance the model's ability to detect unusual patterns that might not be obvious from raw features.
@@ -66,9 +67,11 @@ To improve the model's performance, especially in detecting the minority class (
 ## Results and Evaluation
 The model's performance was evaluated using:
 * **Confusion Matrix:** To understand True Positives, True Negatives, False Positives and False Negatives.
+<img width="200" alt="image" src="https://github.com/LDTgit/Fraud_Detection/blob/main/correlation_matrix.png" />
 * **Classification Report:** Providing Precision, Recall and F1-Score for each class.
 * **Accuracy:** Overall correctness of predictions.
 * **ROC Curve and AUC:** Visualizing the trade-off between True and Positive Rate and False Positive Rate.
+<img width="200" alt="image" src="https://github.com/LDTgit/Fraud_Detection/blob/main/ROC.png" />
 
 **Initial Model Performance (before optimization):**
 * Recall (fraud class): ~28%
